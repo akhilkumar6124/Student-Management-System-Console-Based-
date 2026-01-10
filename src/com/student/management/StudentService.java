@@ -49,16 +49,16 @@ public class StudentService{
 }
 
     public void addStudent(){
-        System.out.println("Enter ID : ");
-        int id = scan.nextInt();
-        scan.nextLine();
-        System.out.println("Enter Name :");
-        String name = scan.nextLine();
-        System.out.println("Enter Age :");
-        int age = scan.nextInt();
-        students.add(new Student(id, name, age));
-        saveToFile();
-        System.out.println("Student added succesfully...");
+       int id = readInt("Enter ID: ");
+       if(isDuplicate(id)){
+        System.out.println("Student with this ID already exists.");
+        return;
+       }
+       String name = readNonEmptyString("Enter Name :");
+       int age = readInt("Enter Age : ");
+       students.add(new Student(id, name, age));
+       saveToFile();
+       System.out.println("Student Added Succesfully...");
     }
     public void viewStudents(){
         if(students.isEmpty()){
@@ -70,11 +70,9 @@ public class StudentService{
         }
     }
     public void searchStudent(){
-        System.out.println("Enter Student ID to search:");
-        int id = scan.nextInt();
+        int id = readInt("Enter Student ID for Search: ");
         for(Student student : students){
-            if(student.getId() == id){
-                System.out.println("Student Found...");
+            if(student.getId()==id){
                 student.display();
                 return;
             }
@@ -82,39 +80,62 @@ public class StudentService{
         System.out.println("Student Not Found...");
     }
     public void updateStudent(){
-        System.out.println("Enter Student ID to update: ");
-        int id = scan.nextInt();
-        scan.nextLine();
+        int id = readInt("Enter Student ID to Update: ");
         for(Student student : students){
-            if(student.getId() == id){
-                System.out.println("Enter New Name: ");
-                String name = scan.nextLine();
-                System.out.println("Enter new age: ");
-                int age = scan.nextInt();
+            if(student.getId()==id){
+                String name = readNonEmptyString("Enter New Name: ");
+                int age = readInt("Enter New Age: ");
                 student.setName(name);
                 student.setAge(age);
-                System.out.println("Student Updated Succesfully...");
                 saveToFile();
+                System.out.println("Student Updated Succesfully...");
                 return;
             }
         }
-        System.out.println("Student not found...");
+        System.out.println("Student Not Found...");
     }
     public void deleteStudent(){
-        System.out.println("Enter Student ID to delete:");
-        int id = scan.nextInt();
+        int id = readInt("Enter student ID to Delete...");
         for(Student student : students){
-            if(student.getId() == id){
+            if(student.getId()==id){
                 students.remove(student);
-                System.out.println("Student Deleted Succesfully...");
                 saveToFile();
+                System.out.println("Student Deleted Succesfully...");
                 return;
             }
         }
-        System.out.println("Student not found...");
+        System.out.println("Student Not Found...");
     }
     public StudentService() {
         System.out.println("📂 Working Directory: " + System.getProperty("user.dir"));
         loadFromFile();
+    }
+    private int readInt(String message){
+        while (true) { 
+            try {
+                System.out.println(message);
+                return Integer.parseInt(scan.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Please Enter a valid number...");
+            }
+        }
+    }
+    private String readNonEmptyString(String message){
+        while (true) { 
+            System.out.println("message");
+            String input = scan.nextLine().trim();
+            if(!input.isEmpty()){
+                return input;
+            }
+            System.out.println("This feild cannot be empty...");
+        }
+    }
+    private boolean isDuplicate(int id){
+        for(Student student : students){
+            if(student.getId()==id){
+                return true;
+            }
+        }
+        return false;
     }
 }
