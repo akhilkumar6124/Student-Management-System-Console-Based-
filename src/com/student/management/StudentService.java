@@ -138,4 +138,46 @@ public class StudentService{
         }
         return false;
     }
+    public void sortById(){
+        students.sort((s1, s2) -> Integer.compare(s1.getId(), s2.getId()));
+        System.out.println("Students sorted By ID...");
+        viewStudents();
+    }
+    public void sortByName(){
+        students.sort((s1, s2) -> s1.getName().compareToIgnoreCase(s2.getName()));
+        System.out.println("Students Sorted By Name...");
+        viewStudents();
+    }
+    public void sortByAge(){
+        students.sort((s1, s2) -> Integer.compare(s1.getAge(), s2.getAge()));
+        System.out.println("Students Sorted By Age...");
+        viewStudents();
+    }
+    public void filterByAgeRange(){
+        int minAge = readInt("Enter minimum age: ");
+        int maxAge = readInt("Enter maximum age: ");
+        boolean found = false;
+        for(Student student : students){
+            if(student.getAge() >= minAge && student.getAge() <= minAge){
+                student.display();
+                found = true;
+            }
+        }
+        if(!found){
+            System.out.println("No Student Found In The Range...");
+        }
+    }
+    public void filterByName(){
+        String keyword = readNonEmptyString("Enter name Keyword: ").toLowerCase();
+        boolean found = false;
+        for(Student student : students){
+            if(student.getName().toLowerCase().contains(keyword)){
+                student.display();
+                found = true;
+            }
+        }
+        if(!found){
+            System.out.println("No Student Found in this Age Range...");
+        }
+    }
 }
