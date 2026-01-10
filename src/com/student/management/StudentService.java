@@ -37,4 +37,34 @@ public class StudentService{
         }
         System.out.println("Student Not Found...");
     }
+    public void updateStudent(){
+        System.out.println("Enter Student ID to update: ");
+        int id = scan.nextInt();
+        scan.nextLine();
+        for(Student student : students){
+            if(student.getId() == id){
+                System.out.println("Enter New Name: ");
+                String name = scan.nextLine();
+                System.out.println("Enter new age: ");
+                int age = scan.nextInt();
+                student.setName(name);
+                student.setAge(age);
+                System.out.println("Student Updated Succesfully...");
+                return;
+            }
+        }
+        System.out.println("Student not found...");
+    }
+    public void deleteStudent(){
+        System.out.println("Enter Student ID to delete:");
+        int id = scan.nextInt();
+        for(Student student : students){
+            if(student.getId() == id){
+                students.remove(student);
+                System.out.println("Student Deleted Succesfully...");
+                return;
+            }
+        }
+        System.out.println("Student not found...");
+    }
 }

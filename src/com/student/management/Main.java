@@ -11,7 +11,9 @@ public class Main{
             System.out.println("1. Add Student");
             System.out.println("2. View All Students");
             System.out.println("3. Search Student by ID");
-            System.out.println("4. Exit");
+            System.out.println("4. update Student");
+            System.out.println("5. Delete Student");
+            System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
             choice = scan.nextInt();
             switch(choice){
@@ -25,12 +27,18 @@ public class Main{
                     service.searchStudent();
                     break;
                 case 4:
+                    service.updateStudent();
+                    break;
+                case 5:
+                    service.deleteStudent();
+                    break;
+                case 6:
                     System.out.println("System Signing Off...");
                     break;
                 default:
                     System.out.println("Invalid Choice...");
             }
-        } while (choice!=4);
+        } while (choice!=6);
         scan.close();
     }
 }
