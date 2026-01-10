@@ -25,6 +25,16 @@ public class Student{
     public void setAge(int age){
         this.age = age;
     }
+    public String toFileString(){
+        return id+","+name+","+age;
+    }
+    public static Student fromFileString(String line){
+        String[] parts = line.split(",");
+        int id = Integer.parseInt(parts[0].trim());
+        String name = parts[1];
+        int age = Integer.parseInt(parts[2].trim());
+        return new Student(id,name,age);
+    }
     public void display(){
         System.out.println("Id: "+id+" Name: "+name+" age: "+age);
     }
